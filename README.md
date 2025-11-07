@@ -41,8 +41,18 @@ As a starting point, students will familiarize themselves with both `Fortran` an
 **Step 1 - Steady heat equation.** The `Hello World!` of partial differential equations, it reads
 
 $$
--\dfrac{d^2}{d x^2} = f(x).
+-\dfrac{d^2 u}{d x^2} = f(x).
 $$
+
+This equation will be discretized with the standard second-order accurate central finite-difference scheme on the unit segment $L = \left[ 0, 1 \right\]$ and uniform grid spacing leading to a tridiagonal matrix representation of this differential operator. The corresponding algebraic system of equations will be solved with a standard dense solver and the [Thomas algorithm](https://en.wikipedia.org/wiki/Tridiagonal_matrix_algorithm).
+
+*Learning objectives.*
+
+- Discretization of differential operators
+    - Derivation of the finite-difference schemes.
+    - Relation between the order of finite-difference scheme and the discretization error.
+- Numerical linear agebra
+    - Performances of dense vs. structure-aware linear solvers.
 
 **Step 2 - Unsteady heat equation.**
 
