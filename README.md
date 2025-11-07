@@ -25,6 +25,32 @@ Relying on the modern `Fortran` ecosystem, the project will make heavy use of th
 
 - `fpm` : the `Fortran` package manager ([documentation](https://fpm.fortran-lang.org/)), available for all operating systems (Windows, macOS, Linux).
 - `stdlib` : the `Fortran` standard library ([documentation](https://stdlib.fortran-lang.org/)) providing high-performance yet easy-to-use numerical linear algebra functionalities.
+- `test-drive` : a simple Fortran package for unit-testing directly supported by the Fortran package manager.
 - `git` : A version control system to keep track of the incremental changes made to the code base.
 
 To install any of these tools, please refer to the appropriate documentation and whatever package manager available in your operating system.
+
+## Organisation
+
+As stated before, this project is inspired by the [12 steps to Navier-Stokes](https://lorenabarba.com/blog/cfd-python-12-steps-to-navier-stokes/). As such, it uses a similar progressive learning curve.
+
+### One-dimensional problems
+
+As a starting point, students will familiarize themselves with both `Fortran` and standard numerical methods on simple one-dimensional problems.
+
+**Step 1 - Steady heat equation.** The `Hello World!` of partial differential equations, it reads
+
+$$
+-\dfrac{d^2}{d x^2} = f(x).
+$$
+
+**Step 2 - Unsteady heat equation.**
+
+**Step 3 - Advection-diffusion equation.**
+
+**Step 4 - Nonlinear Burger's equation.**
+
+### Two-dimensional problems
+
+**Step 1 - Poisson's equation.**
+
