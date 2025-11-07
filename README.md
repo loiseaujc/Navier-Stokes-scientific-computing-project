@@ -12,5 +12,5 @@ This repository contains the skeleton code for the scientific computing project 
 
 | **Step** | **Problem** | **Learning objectives** |
 |:--: | :--- | :--- |
-| #1 | The 1D steady heat equation on the unit-square.<br>- Second-order accurate finite differences<br>- Tridiagonal matrix solver |  |
+| **#1** | The 1D steady heat equation on the unit-square.<br>    • Second-order accurate finite differences<br>    • Tridiagonal matrix solver<br>    • Homogeneous Dirichlet boundary conditions |  |
 
