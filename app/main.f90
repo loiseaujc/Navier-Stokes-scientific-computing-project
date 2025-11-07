@@ -1,7 +1,4 @@
 program main
-   use Constants
-   use HeatEquation
    implicit none(type, external)
-
-   print *, "hello from project Navier-Stokes-scientific-computing-project"
+   print *, "Hello World!"
 end program main
