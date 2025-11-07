@@ -44,7 +44,7 @@ $$
 -\dfrac{d^2 u}{d x^2} = f(x).
 $$
 
-This equation will be discretized with the standard second-order accurate central finite-difference scheme on the unit segment $L = \left[ 0, 1 \right\]$ and uniform grid spacing leading to a tridiagonal matrix representation of this differential operator. The corresponding algebraic system of equations will be solved with a standard dense solver and the [Thomas algorithm](https://en.wikipedia.org/wiki/Tridiagonal_matrix_algorithm).
+This equation will be discretized with the standard second-order accurate central finite-difference scheme on the unit segment $L = \left[ 0, 1 \right\]$ with Dirichlet boundary conditions. A uniform grid spacing will be used, leading to a tridiagonal matrix representation (with constant diagonals) of this differential operator. The corresponding algebraic system of equations will be solved with a standard dense solver and the [Thomas algorithm](https://en.wikipedia.org/wiki/Tridiagonal_matrix_algorithm).
 
 *Learning objectives.*
 
@@ -75,7 +75,17 @@ Both the implicit Euler and the Crank-Nicholson implementations will leverage th
     - Numerical stability of an integration scheme
     - Pros and cons of explicit vs implicit temporal schemes.
 
-**Step 3 - Advection-diffusion equation.**
+**Step 3 - Advection-diffusion equation.** So far, we only considered diffusive processes, modeled either with an elliptic or parabolic partial differential equation. We will now introduce a hyperbolic component modelling the advection process present in the Navier-Stokes equations. For that purpose, we'll consider the linear advection-diffusion equation
+
+$$
+\dfrac{\partial u}{\partial t} + c \dfrac{\partial u}{\partial x} = \nu \dfrac{\partial^2 u}{\partial x^2}
+$$
+
+with different types of boundary conditions: inflow/outflow or periodic boundary conditions. The advective term will be discretized in space with a second-order finite difference approximation and treated in time with a second-order accurate extrapolation.
+
+*Learning objectives.*
+
+- CFL condition for advection-diffusion processes
 
 **Step 4 - Nonlinear Burger's equation.**
 
