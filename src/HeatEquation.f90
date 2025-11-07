@@ -1,5 +1,7 @@
 module HeatEquation
-   use stdlib_specialmatrices, only: tridiagonal_dp_type, spmv
+   use stdlib_specialmatrices, only: tridiagonal, &         ! Constructor
+                                     tridiagonal_dp_type, & ! Data type
+                                     spmv                   ! Matrix-vector product
    use stdlib_linalg, only: norm
    use stdlib_math, only: linspace
    use stdlib_stats, only: mean, var
