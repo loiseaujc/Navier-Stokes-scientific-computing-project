@@ -87,7 +87,13 @@ with different types of boundary conditions: inflow/outflow or periodic boundary
 
 - CFL condition for advection-diffusion processes
 
-**Step 4 - Nonlinear Burger's equation.**
+**Step 4 - Nonlinear Burger's equation.** The final stage in this first part on one-dimensional equations includes non-linearity. In particular, we will consider the viscous nonlinear Burger's equation
+
+$$
+\dfrac{\partial u}{\partial t} + u \dfrac{\partial u}{\partial x} = \nu \dfrac{\partial^2 u}{\partial x^2}
+$$
+
+with appropriate boundary conditions. The numerical setup will be the same as for *step 3*.
 
 ### Two-dimensional problems
 
