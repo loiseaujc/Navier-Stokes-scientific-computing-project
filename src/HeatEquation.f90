@@ -1,57 +1,11 @@
 module HeatEquation
-   use stdlib_specialmatrices, only: tridiagonal, &         ! Constructor
-                                     tridiagonal_dp_type, & ! Data type
-                                     spmv                   ! Matrix-vector product
    use stdlib_linalg, only: norm
    use stdlib_math, only: linspace
    use stdlib_stats, only: mean, var
    use constants
+   use linalg
    implicit none(type, external)
    private
-
-   !------------------------------------------
-   !-----     LINEAR ALGEBRA SOLVERS     -----
-   !------------------------------------------
-
-   interface matmul
-      !! Utility wrapper for the tridiagonal matrix-vector product.
-      !! Note: This function is already coded for you.
-      module function tridiag_matmul(A, x) result(y)
-         type(tridiagonal_dp_type), intent(in) :: A
-         real(dp), intent(in) :: x(:)
-         real(dp), allocatable :: y(:)
-      end function
-   end interface
-
-   interface
-      !! Function for solving a square linear system of equation Ax = b
-      !! using Gaussian elimination. The matrix A is an arbitrary
-      !! square matrix of size n x n.
-      module function dense_solver(A, b) result(x)
-         real(dp), intent(in) :: A(:, :)
-         !! n x n Matrix describing the system of equation.
-         real(dp), intent(in) :: b(:)
-         !! Right-hand side n-vector.
-         real(dp), allocatable :: x(:)
-         !! Solution n-vector.
-      end function
-   end interface
-   public :: dense_solver
-
-   interface
-      !! Function for solving a square linear system of equation Ax = b
-      !! where A is a tridiagonal matrix of size n x n. It uses the
-      !! Thomas algorithm.
-      module function tridiag_solver(A, b) result(x)
-         type(tridiagonal_dp_type), intent(in) :: A
-         !! n x n tridiagonal matrix describing the system of equation.
-         real(dp), intent(in) :: b(:)
-         !! Right-hand side n-vector.
-         real(dp), allocatable :: x(:)
-         !! Solution n-vector.
-      end function
-   end interface
-   public :: tridiag_solver
 
    !--------------------------------------------------------
    !-----     ONE-DIMENSIONAL STEADY HEAT EQUATION     -----
@@ -129,22 +83,6 @@ module HeatEquation
 
 contains
 
-   !------------------------------------------
-   !-----     LINEAR ALGEBRA SOLVERS     -----
-   !------------------------------------------
-
-   module procedure tridiag_matmul
-   integer :: n
-   n = size(x); allocate (y(n), source=0.0_dp)
-   call spmv(A, x, y)
-   end procedure
-
-   module procedure dense_solver
-   end procedure
-
-   module procedure tridiag_solver
-   end procedure
-
    !--------------------------------------------------------
    !-----     ONE-DIMENSIONAL STEADY HEAT EQUATION     -----
    !--------------------------------------------------------
@@ -183,7 +121,7 @@ contains
       !! Current solution at time t = k*dt.
       real(dp), intent(in) :: f(:)
       !! Constant forcing term.
-      type(tridiagonal_dp_type), intent(in) :: L
+      type(tridiagonal_type), intent(in) :: L
       !! Tridiagonal matrix approximation of the 1D Laplacian operator.
       real(dp), intent(in) :: dt
       !! Time step.
@@ -196,7 +134,7 @@ contains
       !! Current solution at time t = k*dt.
       real(dp), intent(in) :: f(:)
       !! Constant forcing term.
-      type(tridiagonal_dp_type), intent(in) :: H
+      type(tridiagonal_type), intent(in) :: H
       !! 1D Helmholtz operator.
       real(dp), intent(in) :: dt
       !! Time step.
@@ -209,9 +147,9 @@ contains
       !! Current solution at time t = k*dt.
       real(dp), intent(in) :: f(:)
       !! Constant forcing term.
-      type(tridiagonal_dp_type), intent(in) :: H
+      type(tridiagonal_type), intent(in) :: H
       !! 1D Helmholtz operator.
-      type(tridiagonal_dp_type), intent(in) :: L
+      type(tridiagonal_type), intent(in) :: L
       !! 1D Laplace operator.
       real(dp), intent(in) :: dt
       !! Time step.
