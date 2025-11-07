@@ -21,9 +21,3 @@ auto-tests = true
 
 [library]
 source-dir="src"
-
-[dependencies]
-stdlib = "*"
-
-[dev-dependencies]
-test-drive.git = "https://github.com/nekStab/test-drive.git"
