@@ -123,3 +123,7 @@ After a brief theoretical presentation of each of these methods, students have t
 - Practical understanding
     - When can a `for`/`do` loop be vectorized and implication on actual computational performances.
     - Introduction to multi-threading in `Fortran` for increased performances.
+
+**Step 6 - Derivation of the discretized Navier-Stokes equations.**
+
+**Step 7 - Implementation and validation.**
