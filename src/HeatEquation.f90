@@ -15,6 +15,7 @@ module HeatEquation
 
    interface matmul
       !! Utility wrapper for the tridiagonal matrix-vector product.
+      !! Note: This function is already coded for you.
       module function tridiag_matmul(A, x) result(y)
          type(tridiagonal_dp_type), intent(in) :: A
          real(dp), intent(in) :: x(:)
@@ -26,7 +27,7 @@ module HeatEquation
       !! Function for solving a square linear system of equation Ax = b
       !! using Gaussian elimination. The matrix A is an arbitrary
       !! square matrix of size n x n.
-      pure module function dense_solver(A, b) result(x)
+      module function dense_solver(A, b) result(x)
          real(dp), intent(in) :: A(:, :)
          !! n x n Matrix describing the system of equation.
          real(dp), intent(in) :: b(:)
@@ -41,7 +42,7 @@ module HeatEquation
       !! Function for solving a square linear system of equation Ax = b
       !! where A is a tridiagonal matrix of size n x n. It uses the
       !! Thomas algorithm.
-      pure module function tridiag_solver(A, b) result(x)
+      module function tridiag_solver(A, b) result(x)
          type(tridiagonal_dp_type), intent(in) :: A
          !! n x n tridiagonal matrix describing the system of equation.
          real(dp), intent(in) :: b(:)
@@ -57,7 +58,10 @@ module HeatEquation
    !--------------------------------------------------------
 
    interface
-      pure module function steadyheat_grid_convergence(ns) result(err)
+      !! This driver function is to be used for assessing the convergence
+      !! of the numerical approximation as the number of grid points
+      !! increases (or conversely, the grid spacing reduces).
+      module function steadyheat_grid_convergence(ns) result(err)
          integer, intent(in) :: ns(:)
          !! Number of points for the list of problems to be tested.
          real(dp), allocatable :: err(:, :)
@@ -72,7 +76,11 @@ module HeatEquation
    public :: steadyheat_grid_convergence
 
    interface
-      pure module function steadyheat_computational_performances(ns, ntrials, solver) result(stats)
+      !! This driver function is to be used to assess the computational
+      !! performances (in terms of time-to-solution) of the different
+      !! linear solvers implemented for the steady 1D heat equation as
+      !! the number of grid points used to discretize the domain increases.
+      module function steadyheat_computational_performances(ns, ntrials, solver) result(stats)
          integer, intent(in) :: ns(:)
          !! Number of points for the list of problems to be tested.
          integer, intent(in) :: ntrials
@@ -97,7 +105,11 @@ module HeatEquation
    !----------------------------------------------------------
 
    interface
-      pure module function unsteadyheat_dt_convergence(dts, Tmax, n) result(err)
+      !! This driver function is to be used to assess the temporal convergence
+      !! of the different time integration schemes implemented as the time step
+      !! decreases. Note that the number of grid points is kept constant throughout
+      !! these computations and is passed as an input argument (n).
+      module function unsteadyheat_dt_convergence(dts, Tmax, n) result(err)
          real(dp), intent(in) :: dts(:)
          !! Range of time steps considered for the analysis.
          real(dp), intent(in) :: Tmax
