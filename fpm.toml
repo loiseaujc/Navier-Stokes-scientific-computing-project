@@ -15,9 +15,7 @@ implicit-external = true
 source-form = "default"
 
 [build]
-auto-executables = false
-auto-examples = false
 auto-tests = true
 
-[library]
-source-dir="src"
+[dependencies]
+stdlib = "*"
