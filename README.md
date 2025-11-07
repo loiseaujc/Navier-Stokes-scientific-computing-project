@@ -54,7 +54,26 @@ This equation will be discretized with the standard second-order accurate centra
 - Numerical linear agebra
     - Performances of dense vs. structure-aware linear solvers.
 
-**Step 2 - Unsteady heat equation.**
+**Step 2 - Unsteady heat equation.** Having solved for the steady solution, the next natural step is to simulate the transients. For that purpose, we'll consider the unsteady heat equation
+
+$$
+\dfrac{\partial u}{\partial t} = \dfrac{\partial^2 u}{\partial x^2} + f.
+$$
+
+The spatial differential operator will be discretized as before. The focus is on the time-integration schemes. Three such schemes will be considered:
+
+- First order explicit Euler
+- First order implicit Euler
+- Second order Crank-Nicholson
+
+Both the implicit Euler and the Crank-Nicholson implementations will leverage the knowledge acquired during *step 1* on linear solvers.
+
+*Learning objectives.*
+
+- Time-integration of partial differential equations
+    - Courant-Friedrich-Levy condition number
+    - Numerical stability of an integration scheme
+    - Pros and cons of explicit vs implicit temporal schemes.
 
 **Step 3 - Advection-diffusion equation.**
 
