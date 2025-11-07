@@ -97,5 +97,29 @@ with appropriate boundary conditions. The numerical setup will be the same as fo
 
 ### Two-dimensional problems
 
-**Step 1 - Poisson's equation.**
+The aim of the first part of this scientific computing project was to familiarize students with the `Fortran` programming language and the basic ingredients required for numerical simulations. In this second part, we will consider two-dimensional problems. Due to the increased dimension of the problem, the focus will be on computational performances not only resulting from an appropriate of numerical methods but also by leveraging built-in features of modern programming languages (e.g. vectorization, `pure` functions, multithreading, etc).
 
+**Step 5 - Poisson's equation.** We will now consider the two-dimensional Poisson equation on the unit square
+
+$$
+\dfrac{\partial^2 u}{\partial x^2} + \dfrac{\partial^2 u}{\partial y^2} = -f(x, y)
+$$
+
+along with Dirichlet boundary conditions. Solving this equation is a computational bottleneck in most incompressible Navier-Stokes solvers. Because of the size of the problems, standard dense linear solvers are out of the question and we will explore iterative solvers. In particular, we will consider:
+
+- The Jacobi method.
+- The Gauss-Seidel method.
+- The Successive Over-Relaxation (SOR) method.
+- The Chebyshev-Jacobi method.
+
+After a brief theoretical presentation of each of these methods, students have to implement them, compare their computational performances and discuss their pros and cons.
+
+*Learning objectives.*
+
+- Theoretical understanding
+    - Spectral radius of the iteration matrix: when does an iterative method converges and, if so, how fast?
+    - Physical interpretation of the over-relaxation procedure.
+    - Asymptotic ($n \to \infty$) convergence rate of an iterative method.
+- Practical understanding
+    - When can a `for`/`do` loop be vectorized and implication on actual computational performances.
+    - Introduction to multi-threading in `Fortran` for increased performances.
