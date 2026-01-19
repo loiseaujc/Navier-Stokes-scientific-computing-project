@@ -4,6 +4,7 @@ module TestLinalg
    use testdrive, only: new_unittest, unittest_type, error_type, check
    use constants
    use linalg
+   use poisson
    implicit none(type, external)
    private
    public :: collect_dense_linalg_tests

@@ -6,6 +6,7 @@ program check
    ! Collection of test problems.
    use TestLinalg, only: collect_dense_linalg_tests, &
                          collect_tridiag_linalg_tests
+   use TestPoisson, only: collect_poisson_tests
    implicit none(external)
 
 ! Unit-test related.
@@ -16,7 +17,8 @@ program check
    ! Collection of test suites.
    status = 0
    testsuites = [new_testsuite("Dense matrices", collect_dense_linalg_tests), &
-                 new_testsuite("Tridiagonal matrices", collect_tridiag_linalg_tests)]
+                 new_testsuite("Tridiagonal matrices", collect_tridiag_linalg_tests), &
+                 new_testsuite("Poisson solvers", collect_poisson_tests)]
 
    ! Run all the test suites.
    do i = 1, size(testsuites)
