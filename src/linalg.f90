@@ -83,15 +83,34 @@ contains
    !----------------------------------------
 
    module procedure dense_matvec
-   integer :: n
-   ! Vector dimension + memory allocation for the result.
-   n = size(A, 1); allocate (y(n), source=0.0_wp)
+   y = matmul(A, x)
    end procedure
 
    module procedure dense_solve
-   integer :: n
+   integer :: n, i, j
+   real(wp), allocatable :: augmented_matrix(:, :)
+   real(wp) :: scale
    ! Vector dimension + memory allocation for the result.
-   n = size(b); allocate (x(n), source=0.0_wp)
+   n = size(b)
+   allocate (augmented_matrix(n, n + 1), source=0.0_wp)
+   allocate (x(n), source=0.0_wp)
+   ! Initialize augmented matrix.
+   augmented_matrix(:, :n) = A; augmented_matrix(:, n + 1) = b
+   ! Reduction to row-echelon form.
+   do j = 1, n - 1
+      do concurrent(i=j + 1:n)
+         scale = augmented_matrix(i, j)/augmented_matrix(j, j)
+         augmented_matrix(i, :) = augmented_matrix(i, :) - scale*augmented_matrix(j, :)
+      end do
+   end do
+   ! Triangular solve.
+   do i = n, 1, -1
+      x(i) = augmented_matrix(i, n + 1)
+      do concurrent(j=n:i + 1:-1)
+         x(i) = x(i) - augmented_matrix(i, j)*x(j)
+      end do
+      x(i) = x(i)/augmented_matrix(i, i)
+   end do
    end procedure
 
    !----------------------------------------------
@@ -102,7 +121,7 @@ contains
    integer :: n, i
    n = A%n; allocate (B(n, n), source=0.0_wp)
    B(1, 1) = A%b; B(1, 2) = A%c
-   do i = 2, n - 1
+   do concurrent(i=2:n - 1)
       B(i, i - 1) = A%a
       B(i, i) = A%b
       B(i, i + 1) = A%c
@@ -111,14 +130,32 @@ contains
    end procedure
 
    module procedure tridiag_matvec
-   integer :: n
+   integer :: n, i
    ! Vector dimension + memory allocation for the result.
    n = A%n; allocate (y(n), source=0.0_wp)
+   y(1) = A%b*x(1) + A%c*x(2)
+   do concurrent(i=2:n - 1)
+      y(i) = A%a*x(i - 1) + A%b*x(i) + A%c*x(i + 1)
+   end do
+   y(n) = A%a*x(n - 1) + A%b*x(n)
    end procedure
 
    module procedure tridiag_solve
-   integer :: n
+   integer :: n, i
+   real(wp), allocatable :: bp(:)
+   real(wp) :: w
    ! Vector dimension + memory allocation for the result.
-   n = size(b); allocate (x(n), source=0.0_wp)
+   n = size(b); allocate (x(n), source=b); allocate (bp(n), source=A%b)
+   ! Forward sweep.
+   do i = 2, n
+      w = A%a/bp(i - 1)
+      bp(i) = bp(i) - w*A%c
+      x(i) = x(i) - w*x(i - 1)
+   end do
+   ! Backward sweep.
+   x(n) = x(n)/bp(n)
+   do i = n - 1, 1, -1
+      x(i) = (x(i) - A%c*x(i + 1))/bp(i)
+   end do
    end procedure
 end module linalg
